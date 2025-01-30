@@ -23,4 +23,13 @@ public class DatabaseService {
     public Movie getMovieById(Integer id) {
         return movieRepository.findById(id).get();
     }
+
+    public void update(Movie movie, Integer id) {
+        Movie tobeUpdated = getMovieById(id);
+        tobeUpdated.setTitle(movie.getTitle());
+        tobeUpdated.setComment(movie.getComment());
+        tobeUpdated.setPriority(movie.getPriority());
+        tobeUpdated.setRating(movie.getRating());
+        movieRepository.save(tobeUpdated);
+    }
 }
