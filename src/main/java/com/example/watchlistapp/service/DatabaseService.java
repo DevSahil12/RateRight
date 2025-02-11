@@ -21,8 +21,9 @@ public class DatabaseService {
     }
 
     public Movie getMovieById(Integer id) {
-        return movieRepository.findById(id).get();
+        return movieRepository.findById(id).orElseThrow(() -> new RuntimeException("Movie not found"));
     }
+
 
     public void update(Movie movie, Integer id) {
         Movie tobeUpdated = getMovieById(id);
@@ -31,5 +32,9 @@ public class DatabaseService {
         tobeUpdated.setPriority(movie.getPriority());
         tobeUpdated.setRating(movie.getRating());
         movieRepository.save(tobeUpdated);
+    }
+
+    public void deleteMovie(Integer id) {
+        movieRepository.deleteById(id);
     }
 }
