@@ -11,8 +11,14 @@ import java.util.List;
 public class DatabaseService {
     @Autowired //no need to create object explicitly
     MovieRepository movieRepository;
+    @Autowired
+    RatingService ratingService;
 
     public void create(Movie movie) {
+        String rating = ratingService.getMovieRating(movie.getTitle());
+        if (rating != null) {
+            movie.setRating(Float.parseFloat(rating));
+        }
         movieRepository.save(movie);
     }
 
@@ -24,7 +30,6 @@ public class DatabaseService {
         return movieRepository.findById(id).orElseThrow(() -> new RuntimeException("Movie not found"));
     }
 
-
     public void update(Movie movie, Integer id) {
         Movie tobeUpdated = getMovieById(id);
         tobeUpdated.setTitle(movie.getTitle());
@@ -34,7 +39,7 @@ public class DatabaseService {
         movieRepository.save(tobeUpdated);
     }
 
-    public void deleteMovie(Integer id) {
-        movieRepository.deleteById(id);
-    }
+//    public void deleteMovieById(Movie movie) {
+//        movieRepository.deleteById(movie.getId());
+//    }
 }

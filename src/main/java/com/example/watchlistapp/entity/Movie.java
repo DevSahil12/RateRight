@@ -1,10 +1,12 @@
 package com.example.watchlistapp.entity;
 
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Movie {
@@ -14,8 +16,9 @@ public class Movie {
     @NotBlank(message = "Please Enter the title")
     private String title;
     private float rating;
-
+    @Priority
     private String priority;
+    @Size(max = 50, message = "Comment should be maximum 50 character")
     private String comment;
 
     public Integer getId() {

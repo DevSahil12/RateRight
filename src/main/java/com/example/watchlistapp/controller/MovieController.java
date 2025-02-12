@@ -5,7 +5,6 @@ import com.example.watchlistapp.service.DatabaseService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
@@ -32,7 +31,7 @@ public class MovieController {
     }
 
     @PostMapping(value = "/watchlistItemForm")
-    public ModelAndView submitWatchListForm(@Valid Movie movie, BindingResult bindingResult) {
+    public ModelAndView submitWatchListForm(@Valid @ModelAttribute("watchlistItem") Movie movie, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             //if errors are there re-display the page
             return new ModelAndView("watchlistItemForm");
@@ -58,9 +57,9 @@ public class MovieController {
         return new ModelAndView(viewName, model);
     }
 
-    @DeleteMapping("/watchlistItemForm")
-    public RedirectView deleteMovie(@RequestParam Integer id) {
-        service.deleteMovie(id);
-        return new RedirectView("/watchlistItemForm");
-    }
+//    @DeleteMapping("/deleteWatchlistItem")
+//    public String deleteMovie( Movie movie) {
+//        service.deleteMovieById(movie);
+//        return "redirect:/watchlist";
+//    }
 }
